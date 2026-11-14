@@ -1427,4 +1427,16 @@ config TOUCHSCREEN_HIMAX_HX83112B
 	  To compile this driver as a module, choose M here: the
 	  module will be called himax_hx83112b.
 
+config TOUCHSCREEN_STFTS_SPI
+	tristate "ST FingerTipS SPI touchscreen"
+	depends on SPI && GPIOLIB && REGULATOR
+	help
+	  SPI transport for the ST FingerTipS controller used on the Google
+	  Pixel 5a (barbet), using the firmware installed on the controller.
+	  Reports multitouch input and supports system sleep/resume. Firmware
+	  updates and sensor-DSP gesture wake are not supported.
+
+	  To compile this driver as a module, choose M here. The module will
+	  be called stfts-spi.
+
 endif
