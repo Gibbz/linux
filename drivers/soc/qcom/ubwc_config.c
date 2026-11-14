@@ -94,6 +94,9 @@ static const struct qcom_ubwc_cfg_data sm7250_data = {
 	.ubwc_swizzle = UBWC_SWIZZLE_ENABLE_LVL2 |
 			UBWC_SWIZZLE_ENABLE_LVL3,
 	.highest_bank_bit = 14,
+	/* UBWC 3.1 is the 8-channel macrotile format; the SM7250 DPU uses it. */
+	.ubwc_bank_spread = true,
+	.macrotile_mode = true,
 };
 
 static const struct qcom_ubwc_cfg_data sc7280_data = {
