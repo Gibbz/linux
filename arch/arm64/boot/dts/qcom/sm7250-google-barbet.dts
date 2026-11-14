@@ -1725,7 +1725,7 @@
 				charger@1000 {
 					compatible = "qcom,pm7250b-charger";
 					reg = <0x1000>;
-					status = "disabled";
+					status = "okay";
 				};
 
 				typec@1500 {
