@@ -1012,6 +1012,22 @@ static const struct qcom_pas_data sm6350_adsp_resource = {
 	.ssctl_id = 0x14,
 };
 
+static const struct qcom_pas_data sm7250_adsp_resource = {
+	.crash_reason_smem = 423,
+	.firmware_name = "adsp.mdt",
+	.pas_id = 1,
+	.auto_boot = false,
+	.proxy_pd_names = (char*[]){
+		"lcx",
+		"lmx",
+		NULL
+	},
+	.load_state = "adsp",
+	.ssr_name = "lpass",
+	.sysmon_name = "adsp",
+	.ssctl_id = 0x14,
+};
+
 static const struct qcom_pas_data sm6375_mpss_resource = {
 	.crash_reason_smem = 421,
 	.firmware_name = "modem.mdt",
@@ -1706,7 +1722,7 @@ static const struct of_device_id qcom_pas_of_match[] = {
 	{ .compatible = "qcom,sm6375-adsp-pas", .data = &sm6350_adsp_resource },
 	{ .compatible = "qcom,sm6375-cdsp-pas", .data = &sm8150_cdsp_resource },
 	{ .compatible = "qcom,sm6375-mpss-pas", .data = &sm6375_mpss_resource },
-	{ .compatible = "qcom,sm7250-adsp-pas", .data = &sm6350_adsp_resource },
+	{ .compatible = "qcom,sm7250-adsp-pas", .data = &sm7250_adsp_resource },
 	{ .compatible = "qcom,sm7250-cdsp-pas", .data = &sm7250_cdsp_resource },
 	{ .compatible = "qcom,sm7250-mpss-pas", .data = &mpss_resource_init },
 	{ .compatible = "qcom,sm8150-adsp-pas", .data = &sm8150_adsp_resource },
