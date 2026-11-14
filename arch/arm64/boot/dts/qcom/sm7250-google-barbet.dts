@@ -2720,6 +2720,10 @@
 				label = "lpass";
 				qcom,remote-pid = <0x02>;
 
+				ipcrtr {
+					qcom,glink-channels = "IPCRTR";
+				};
+
 				fastrpc {
 					compatible = "qcom,fastrpc";
 					qcom,glink-channels = "fastrpcglink-apps-dsp";
