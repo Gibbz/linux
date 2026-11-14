@@ -326,6 +326,31 @@ static const struct snd_soc_ops sm8250_be_ops = {
 	.prepare = sm8250_snd_prepare,
 };
 
+/*
+ * Barbet captures through the RT5514P, whose ADC/DSP produces 32 kHz data
+ * while the primary TDM backend runs at 48 kHz. The ADSP only returns usable
+ * samples for a 32 kHz front end; at 48 kHz userspace receives a fixed
+ * bit pattern instead of audio, so pin the capture rate.
+ */
+static int sm8250_fe_startup(struct snd_pcm_substream *substream)
+{
+	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+	struct snd_pcm_runtime *runtime = substream->runtime;
+
+	if (strcmp(rtd->card->name, "barbet") == 0 &&
+	    substream->stream == SNDRV_PCM_STREAM_CAPTURE) {
+		runtime->hw.rates = SNDRV_PCM_RATE_32000;
+		runtime->hw.rate_min = 32000;
+		runtime->hw.rate_max = 32000;
+	}
+
+	return 0;
+}
+
+static const struct snd_soc_ops sm8250_fe_ops = {
+	.startup = sm8250_fe_startup,
+};
+
 static void sm8250_add_be_ops(struct snd_soc_card *card)
 {
 	struct snd_soc_dai_link *link;
@@ -337,6 +362,8 @@ static void sm8250_add_be_ops(struct snd_soc_card *card)
 			link->exit = sm8250_snd_exit;
 			link->be_hw_params_fixup = sm8250_be_hw_params_fixup;
 			link->ops = &sm8250_be_ops;
+		} else if (strcmp(card->name, "barbet") == 0 && !link->ops) {
+			link->ops = &sm8250_fe_ops;
 		}
 	}
 }
