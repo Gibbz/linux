@@ -398,6 +398,19 @@ config TOUCHSCREEN_GOODIX
 	  To compile this driver as a module, choose M here: the
 	  module will be called goodix.
 
+config TOUCHSCREEN_GOODIX_GT9886
+	tristate "Goodix GT9886 I2C touchscreen"
+	depends on I2C
+	help
+	  Say Y here if you have a Goodix GT9886 touchscreen connected
+	  to your system via I2C (found on the OnePlus Nord). The driver
+	  uses the firmware and configuration already in the controller.
+
+	  If unsure, say N.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called goodix_gt9886.
+
 config TOUCHSCREEN_GOODIX_BERLIN_CORE
 	tristate
 
