@@ -908,6 +908,18 @@
 					pinctrl-1 = <0x4c 0x4d 0x4e 0x4f 0x50 0x51>;
 					phandle = <0x9a>;
 				};
+
+				drv2624@5a {
+					compatible = "ti,drv2624";
+					reg = <0x5a>;
+					pinctrl-names = "default";
+					pinctrl-0 = <&drv2624_rst>;
+					reset-gpio = <&pm7250b_gpios 0x01 0x00>;
+					ti,smart-loop = <0x01>;
+					ti,actuator = <0x01>;
+					ti,rated-voltage = /bits/ 8 <0x6d>;
+					ti,odclamp-voltage = /bits/ 8 <0xa1>;
+				};
 			};
 
 			i2c@994000 {
@@ -1841,7 +1853,7 @@
 					status = "disabled";
 				};
 
-				gpio@c000 {
+				pm7250b_gpios: gpio@c000 {
 					compatible = "qcom,pm7250b-gpio", "qcom,spmi-gpio";
 					reg = <0xc000>;
 					gpio-controller;
@@ -1850,6 +1862,11 @@
 					interrupt-controller;
 					#interrupt-cells = <0x02>;
 					phandle = <0x7c>;
+
+					drv2624_rst: drv2624-rst {
+						pins = "gpio1";
+						output-low;
+					};
 
 					audio-ldo1 {
 						pins = "gpio6";
@@ -3936,4 +3953,5 @@
 		regulator-always-on;
 		phandle = <0x7f>;
 	};
+
 };
