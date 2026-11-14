@@ -1758,7 +1758,7 @@
 					phandle = <0xb7>;
 				};
 
-				adc@3100 {
+				pm7250b_vadc: adc@3100 {
 					compatible = "qcom,spmi-adc5";
 					reg = <0x3100>;
 					#address-cells = <0x01>;
@@ -3954,4 +3954,10 @@
 		phandle = <0x7f>;
 	};
 
+	barbet_battery {
+		compatible = "google,barbet-battery";
+		io-channels = <&pm7250b_vadc 0x84>;
+		voltage-min-microvolt = <3200000>;
+		voltage-max-microvolt = <4350000>;
+	};
 };
