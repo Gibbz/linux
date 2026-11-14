@@ -88,6 +88,14 @@ static const struct qcom_ubwc_cfg_data sc7180_data = {
 	.highest_bank_bit = 14,
 };
 
+static const struct qcom_ubwc_cfg_data sm7250_data = {
+	.ubwc_enc_version = UBWC_3_1,
+	.ubwc_dec_version = UBWC_3_1,
+	.ubwc_swizzle = UBWC_SWIZZLE_ENABLE_LVL2 |
+			UBWC_SWIZZLE_ENABLE_LVL3,
+	.highest_bank_bit = 14,
+};
+
 static const struct qcom_ubwc_cfg_data sc7280_data = {
 	.ubwc_enc_version = UBWC_3_0,
 	.ubwc_dec_version = UBWC_4_0,
@@ -287,6 +295,7 @@ static const struct of_device_id qcom_ubwc_configs[] __maybe_unused = {
 	{ .compatible = "qcom,sm7125", .data = &sc7180_data },
 	{ .compatible = "qcom,sm7150", .data = &sm7150_data, },
 	{ .compatible = "qcom,sm7225", .data = &sm6350_data, },
+	{ .compatible = "qcom,sm7250", .data = &sm7250_data, },
 	{ .compatible = "qcom,sm7325", .data = &sc7280_data, },
 	{ .compatible = "qcom,sm8150", .data = &sm8150_data, },
 	{ .compatible = "qcom,sm8250", .data = &sm8250_data, },
