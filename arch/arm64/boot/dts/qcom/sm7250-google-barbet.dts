@@ -820,7 +820,15 @@
 				codec@0 {
 					compatible = "realtek,rt5514";
 					reg = <0x00>;
-					spi-max-frequency = <0xf4240>;
+					interrupt-parent = <0x33>;
+					interrupts = <65 0>, <11 0>;
+					interrupt-names = "irq", "handshake-ack";
+					irq-gpio = <0x33 65 0>;
+					handshake-gpio = <0x33 66 0>;
+					handshake-ack-gpio = <0x33 11 0>;
+					pinctrl-names = "default";
+					pinctrl-0 = <&rt5514_irq &rt5514_ack>;
+					spi-max-frequency = <0x989680>;
 					spi-cpol;
 					spi-cpha;
 				};
@@ -2296,6 +2304,22 @@
 			wakeup-parent = <0x56>;
 			gpio-reserved-ranges = <0x00 0x04 0x3b 0x04>;
 			phandle = <0x33>;
+
+			rt5514_irq: rt5514-irq {
+				pins = "gpio65";
+				function = "gpio";
+				drive-strength = <0x02>;
+				bias-pull-down;
+				input-enable;
+			};
+
+			rt5514_ack: rt5514-ack {
+				pins = "gpio11";
+				function = "gpio";
+				drive-strength = <0x02>;
+				bias-pull-down;
+				input-enable;
+			};
 
 			qup-uart2-default-state {
 				pins = "gpio36", "gpio37";
