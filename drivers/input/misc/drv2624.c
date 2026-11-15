@@ -12,6 +12,8 @@
 #include <linux/gpio/consumer.h>
 #include <linux/i2c.h>
 #include <linux/input.h>
+#include <linux/math.h>
+#include <linux/minmax.h>
 #include <linux/module.h>
 #include <linux/regmap.h>
 #include <linux/workqueue.h>
@@ -76,13 +78,18 @@ static int drv2624_play(struct input_dev *dev, void *data,
 	struct drv2624 *h = input_get_drvdata(dev);
 	u8 strong = effect->u.rumble.strong_magnitude >> 8;
 	u8 weak = effect->u.rumble.weak_magnitude >> 8;
+	u32 magnitude = max(strong, weak);
 
 	/*
 	 * The input core calls this with the device event lock held, so it has
 	 * to stay free of I2C traffic. Record the request and let the worker
 	 * program the device.
+	 *
+	 * RTP_INPUT is a signed 8-bit field, 0 to 127; an unscaled u8 puts the
+	 * upper half of the rumble range on the negative side, where a full
+	 * strength effect turns into almost no output.
 	 */
-	h->magnitude = max(strong, weak);
+	h->magnitude = DIV_ROUND_UP(magnitude * 0x7f, 0xff);
 	h->length_ms = effect->replay.length;
 	schedule_work(&h->play_work);
 
