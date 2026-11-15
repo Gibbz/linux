@@ -126,3 +126,7 @@ CONFIG_TEE=y
 CONFIG_TOUCHSCREEN_STFTS_SPI=y
 CONFIG_TYPEC_QCOM_PMIC=m
 CONFIG_USB_QCOM_EUD=m
+
+# The Luma phone image runs systemd-zram-generator and waits for zram0.
+CONFIG_ZRAM=y
+CONFIG_ZRAM_DEF_COMP_LZ4=y
