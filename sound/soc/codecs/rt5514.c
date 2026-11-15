@@ -1128,17 +1128,17 @@ update_buffer_status:
 	return 0;
 }
 
-bool rt5514_buffer_status(void)
+static bool rt5514_buffer_status(void)
 {
 	return g_rt5514->buffer_status;
 }
 
-int rt5514_zlatency_delay(void)
+static int rt5514_zlatency_delay(void)
 {
 	return g_rt5514->zlatency_delay;
 }
 
-void rt5514_watchdog_handler(void)
+static void rt5514_watchdog_handler(void)
 {
 #if IS_ENABLED(CONFIG_SND_SOC_CODEC_DETECT)
 	codec_detect_status_notifier(WDSP_STAT_CRASH);
@@ -1876,14 +1876,14 @@ static const char * const rt5514_dmic_src[] = {
 	"DMIC1", "DMIC2"
 };
 
-static const SOC_ENUM_SINGLE_DECL(
+static SOC_ENUM_SINGLE_DECL(
 	rt5514_stereo1_dmic_enum, RT5514_DIG_SOURCE_CTRL,
 	RT5514_AD0_DMIC_INPUT_SEL_SFT, rt5514_dmic_src);
 
 static const struct snd_kcontrol_new rt5514_sto1_dmic_mux =
 	SOC_DAPM_ENUM("Stereo1 DMIC Source", rt5514_stereo1_dmic_enum);
 
-static const SOC_ENUM_SINGLE_DECL(
+static SOC_ENUM_SINGLE_DECL(
 	rt5514_stereo2_dmic_enum, RT5514_DIG_SOURCE_CTRL,
 	RT5514_AD1_DMIC_INPUT_SEL_SFT, rt5514_dmic_src);
 
@@ -1893,6 +1893,7 @@ static const struct snd_kcontrol_new rt5514_sto2_dmic_mux =
 /**
  * rt5514_calc_dmic_clk - Calculate the frequency divider parameter of dmic.
  *
+ * @component: codec component.
  * @rate: base clock rate.
  *
  * Choose divider parameter that gives the highest possible DMIC frequency in

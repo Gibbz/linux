@@ -31,7 +31,6 @@
 
 #include "rt5514-spi.h"
 
-extern void rt5514_spi_bus_switch(bool host);
 
 #define DRV_NAME "rt5514-spi"
 

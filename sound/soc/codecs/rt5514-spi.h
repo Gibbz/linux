@@ -34,6 +34,9 @@ enum {
 int rt5514_spi_burst_read(unsigned int addr, u8 *rxbuf, size_t len);
 int rt5514_spi_burst_write(u32 addr, const u8 *txbuf, size_t len);
 
+int rt5514_set_gpio(int gpio, bool output);
+void rt5514_spi_bus_switch(bool host);
+
 
 /* Vendor additions used by the ported RT5514P codec driver. */
 #define RT5514_BUFFER_VOICE_BASE_V	0x18002fb4
